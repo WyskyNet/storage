@@ -156,9 +156,9 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	sort.Slice(messages, func(i, j int) bool{
 		return messages[i].Created.After(messages[j].Created)
 	})
-
+	
 	log.Printf("Found %d messages", len(messages))
-	msgs := data.Messages(messages)
+	msgs := data.Messages(make(messages, limit))
 	return &msgs, nil
 }
 
