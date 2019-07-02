@@ -139,8 +139,20 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	if err != nil {
 		return nil, err
 	}
+	
+	sort.Slice(n, func(i,j int) bool{
+    		return n[i].ModTime().Unix() < n[j].ModTime().Unix()
+	})
 
+	i = 0;
 	for _, fileinfo := range n {
+		if start < i {
+			continue
+		}
+		if start + limit > i {
+			continue
+		}
+		i++;
 		b, err := ioutil.ReadFile(filepath.Join(maildir.Path, fileinfo.Name()))
 		if err != nil {
 			return nil, err
@@ -153,13 +165,9 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 		messages = append(messages, m)
 	}
 	
-	sort.Slice(messages, func(i, j int) bool{
-		return messages[i].Created.After(messages[j].Created)
-	})
-	
 	log.Printf("Found %d messages", len(messages))
 	
-	msgs := data.Messages(messages[start:start+limit])
+	msgs := data.Messages(messages)
 	return &msgs, nil
 }
 
