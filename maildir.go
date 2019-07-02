@@ -159,7 +159,7 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	
 	log.Printf("Found %d messages", len(messages))
 	
-	msgs := data.Messages(messages[start:start+limit+1])
+	msgs := data.Messages(messages[start:start+limit])
 	return &msgs, nil
 }
 
