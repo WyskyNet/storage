@@ -141,15 +141,15 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	}
 	
 	sort.Slice(n, func(i,j int) bool{
-    		return n[i].ModTime().Unix() < n[j].ModTime().Unix()
+    		return n[i].ModTime().Unix() > n[j].ModTime().Unix()
 	})
 
 	var i = 0;
-	for _, fileinfo := range n {
+	for _, fileinfo, start, limit := range n {
 		i++;		
-// 		if start < i {
-// 			continue
-// 		}
+		if start < i {
+			continue
+		}
 		if (start + limit) > i {
 			continue
 		}
