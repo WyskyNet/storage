@@ -145,7 +145,7 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	})
 
 	for i := 0; i < len(n) ; i++ {
-		if start < i {
+		if start > 0 && start < i {
 			continue
 		}
 		if limit > 0 && limit > i {
