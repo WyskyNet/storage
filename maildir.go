@@ -144,7 +144,7 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
     		return n[i].ModTime().Unix() > n[j].ModTime().Unix()
 	})
 
-	for i, fileinfo := range n {
+	for _, fileinfo := range n {
 // 		if start > 0 && start < i {
 // 			continue
 // 		}
