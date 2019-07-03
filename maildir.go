@@ -145,12 +145,12 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	})
 
 	for i := 0; i < len(n) ; i++ {
-		if start > 0 && start < i {
-			continue
-		}
-		if limit > 0 && limit > i {
-			break
-		}
+// 		if start > 0 && start < i {
+// 			continue
+// 		}
+// 		if limit > 0 && limit > i {
+// 			break
+// 		}
 		b, err := ioutil.ReadFile(filepath.Join(maildir.Path, n[i].Name()))
 		if err != nil {
 			return nil, err
