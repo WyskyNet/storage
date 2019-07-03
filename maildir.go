@@ -144,24 +144,22 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
     		return n[i].ModTime().Unix() > n[j].ModTime().Unix()
 	})
 
-	var i = 0;
-	for _, fileinfo := range n {
-		i++;		
-// 		if start < i {
-// 			continue
-// 		}
+	for i := 0; i < len(n) ; i++ {
+		if start < i {
+			continue
+		}
 		if limt > 0 && limit > i {
 			break
 		}
-		b, err := ioutil.ReadFile(filepath.Join(maildir.Path, fileinfo.Name()))
+		b, err := ioutil.ReadFile(filepath.Join(maildir.Path, n[i].Name()))
 		if err != nil {
 			return nil, err
 		}
 		msg := data.FromBytes(b)
 		// FIXME domain
 		m := *msg.Parse("mailhog.example")
-		m.ID = data.MessageID(fileinfo.Name())
-		m.Created = fileinfo.ModTime()
+		m.ID = data.MessageID(n[i].Name())
+		m.Created = n[i].ModTime()
 		messages = append(messages, m)
 	}
 	
