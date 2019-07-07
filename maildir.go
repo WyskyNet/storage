@@ -145,7 +145,7 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	}
 	
 	if (len(n) < limit) {
-		limt = len(n)
+		limit = len(n)
 	}
 	
 	sort.Slice(n, func(i,j int) bool{
