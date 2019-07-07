@@ -139,6 +139,14 @@ func (maildir *Maildir) List(start, limit int) (*data.Messages, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if (len(n) < start) {
+		start = len(n)
+	}
+	
+	if (len(n) < limit) {
+		limt = len(n)
+	}
 	
 	sort.Slice(n, func(i,j int) bool{
     		return n[i].ModTime().Unix() > n[j].ModTime().Unix()
